@@ -8,6 +8,7 @@
 
 #include "FirstComeFirstServe.h"
 #include "Prozess.h"
+#include "RoundRobin.h"
 #include "ShortestJobFirst.h"
 
 bool CompareArrivalTimes(Prozess p1, Prozess p2)
@@ -37,8 +38,27 @@ int main()
         prozesse.push_back(tempProzess);
     }
 
-    
+
     std::stable_sort(prozesse.begin(), prozesse.end(), CompareArrivalTimes);
+
+
+    RoundRobin rr(prozesse, 1);
+    rr.Schedule();
+    std::cout << "Round Robin (Q=1):  Durchschnittliche Wartezeit:" << rr.GetReadyTime() << std::endl;
+
+    //Round Robin erhält unsortierten Vektor!
+    RoundRobin rr2(prozesse, 2);
+    rr2.Schedule();
+    std::cout << "Round Robin (Q=2):  Durchschnittliche Wartezeit:" << rr2.GetReadyTime() << std::endl;
+
+
+    //Round Robin erhält unsortierten Vektor!
+    RoundRobin rr4(prozesse, 4);
+    rr4.Schedule();
+    std::cout << "Round Robin (Q=4):  Durchschnittliche Wartezeit:" << rr4.GetReadyTime() << std::endl;
+
+    
+    
 
     //Strategien anlegen
     
@@ -49,4 +69,6 @@ int main()
     ShortestJobFirst sjf(prozesse);
     sjf.Schedule();
     std::cout << "Shortest Job First:  Durchschnittliche Wartezeit:" << sjf.GetReadyTime() << std::endl;
+
+
 }

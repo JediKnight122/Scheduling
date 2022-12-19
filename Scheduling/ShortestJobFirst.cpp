@@ -5,7 +5,7 @@
 bool ShortestJobFirst::CompareJobLenghts(Prozess p1, Prozess p2)
 {
     if (p1.m_timeToCalculate == p2.m_timeToCalculate) return false;
-    return (p1.m_timeToCalculate >= p2.m_timeToCalculate);
+    return (p1.m_timeToCalculate < p2.m_timeToCalculate);
 }
 
 ShortestJobFirst::ShortestJobFirst(std::vector<Prozess>& pProzesses): SchedulingStrategy(pProzesses)
