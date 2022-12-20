@@ -1,0 +1,18 @@
+# ninja log v5
+21	1003	6932637023991818	CMakeFiles/SchedulingCalculator_main.dir/Scheduling/Prozess.cpp.obj	38081e584a2bec35
+15	1530	6932637025951805	CMakeFiles/SchedulingCalculator_main.dir/Scheduling/RoundRobin.cpp.obj	c0a1dee92582bdc9
+1	680	6932638868135449	CMakeFiles/SchedulingCalculator_main.dir/Scheduling/LeastLaxityFirst.cpp.obj	41f4ad82a56da7e5
+10	1627	6932637030062152	CMakeFiles/SchedulingCalculator_main.dir/Scheduling/EarliestDeadlineFirst.cpp.obj	abad7e89b70ee014
+0	1263	6932637025941785	CMakeFiles/SchedulingCalculator_main.dir/Scheduling/FirstComeFirstServe.cpp.obj	367d5f98518c4623
+1004	2212	6932637036052619	CMakeFiles/SchedulingCalculator_main.dir/Scheduling/SchedulingStrategy.cpp.obj	2f1670c0c2ed1aa4
+1264	2282	6932637036897854	CMakeFiles/SchedulingCalculator_main.dir/Scheduling/ShortestJobFirst.cpp.obj	fdb5b7a236d33326
+2	853	6932638177676992	CMakeFiles/SchedulingCalculator_main.dir/Scheduling/Scheduling.cpp.obj	a6b4c21388ad8568
+681	956	6932638870530614	SchedulingCalculator_main.exe	7defdb082d9e0926
+7	370	6932775833302450	build.ninja	40760a35eb81a34
+1	869	6932775913661113	CMakeFiles/SchedulingCalculator_main.dir/Scheduling/Prozess.cpp.obj	3c8c394cb4184ce
+221	2148	6932775929352126	CMakeFiles/SchedulingCalculator_main.dir/Scheduling/ShortestJobFirst.cpp.obj	6d96ddde1ae40d6a
+7	2310	6932775930962173	CMakeFiles/SchedulingCalculator_main.dir/Scheduling/EarliestDeadlineFirst.cpp.obj	c45b68ca0f9b51e4
+52	2352	6932775931362592	CMakeFiles/SchedulingCalculator_main.dir/Scheduling/LeastLaxityFirst.cpp.obj	439d35d917a8764a
+70	3098	6932775938849079	CMakeFiles/SchedulingCalculator_main.dir/Scheduling/Scheduling.cpp.obj	fce0baae5d3156d5
+4	290	6932776338044436	CMakeFiles/SchedulingCalculator_main.dir/Scheduling/FirstComeFirstServe.cpp.obj	102b6f9f6b83706
+6	393	6932776422007635	CMakeFiles/SchedulingCalculator_main.dir/Scheduling/RoundRobin.cpp.obj	f979f32505790162
