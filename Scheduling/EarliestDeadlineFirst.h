@@ -8,8 +8,8 @@ class EarliestDeadlineFirst: public SchedulingStrategy
 private:
     std::vector<Prozess> prozesseOpen;
     std::vector<Prozess> prozesseDone;
-    int timeNow=0;
-    int sizeAll;
+    unsigned int timeNow = 0;
+    int sizeAll = 0;
 
 public:
     EarliestDeadlineFirst(std::vector<Prozess> &pProzesses);

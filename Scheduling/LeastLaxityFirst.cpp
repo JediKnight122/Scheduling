@@ -12,7 +12,7 @@ void LeastLaxityFirst::Schedule() {
     sizeAll = m_Prozesses.size();
 
     while (prozesseDone.size() != sizeAll) {
-        for (int i = 0; i < m_Prozesses.size(); ++i) {
+        for (size_t i = 0; i < m_Prozesses.size(); ++i) {
             if (m_Prozesses[i].m_timeArrival <= timeNow && !m_Prozesses[i].dead) {
                 m_Prozesses[i].dead=true;
                 prozesseOpen.push_back(m_Prozesses[i]);
@@ -30,7 +30,7 @@ void LeastLaxityFirst::Schedule() {
             timeNow++;
         }
     }
-    for (int i = 0; i < prozesseDone.size(); ++i) {
+    for (size_t i = 0; i < prozesseDone.size(); ++i) {
         prozesseDone[i].m_timeTookToCalculate = prozesseDone[i].m_doneTime - prozesseDone[i].m_timeArrival;
     }
     for (size_t i = 0; i < prozesseDone.size(); i++) {
@@ -49,7 +49,7 @@ bool LeastLaxityFirst::CompareLaxity(Prozess p1, Prozess p2) {
 }
 
 void LeastLaxityFirst::CalcLaxity(std::vector<Prozess> &pProzesses) {
-    for (int i = 0; i < pProzesses.size(); ++i) {
+    for (size_t i = 0; i < pProzesses.size(); ++i) {
         pProzesses[i].m_laxity=pProzesses[i].m_deadline-pProzesses[i].m_timeArrival-pProzesses[i].m_timeToCalculate;
     }
 }

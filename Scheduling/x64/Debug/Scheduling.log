@@ -1,2 +1,10 @@
 ﻿  Scheduling.cpp
-  Scheduling.vcxproj -> C:\Users\crusa\OneDrive\Studium\BSS\KlausurProjekt\Scheduling\x64\Debug\Scheduling.exe
+C:\Users\denni\Desktop\BS-SchedulingBonus\SchedulingCalculator\Scheduling\Scheduling.cpp(46,23): warning C4244: 'initializing': conversion from '_Rep' to 'unsigned int', possible loss of data
+          with
+          [
+              _Rep=std::chrono::system_clock::rep
+          ]
+C:\Users\denni\Desktop\BS-SchedulingBonus\SchedulingCalculator\Scheduling\Scheduling.cpp(72,48): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\denni\Desktop\BS-SchedulingBonus\SchedulingCalculator\Scheduling\Scheduling.cpp(74,55): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\denni\Desktop\BS-SchedulingBonus\SchedulingCalculator\Scheduling\Scheduling.cpp(109,25): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  Scheduling.vcxproj -> C:\Users\denni\Desktop\BS-SchedulingBonus\SchedulingCalculator\x64\Debug\Scheduling.exe

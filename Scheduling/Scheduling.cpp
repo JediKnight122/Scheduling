@@ -4,6 +4,11 @@
 #include <algorithm>
 #include <iostream>
 #include <vector>
+#include <array>
+#include <chrono>
+#include <random>
+
+#include <Windows.h>
 
 #include "Prozess.h"
 #include "FirstComeFirstServe.h"
@@ -13,14 +18,224 @@
 #include "RoundRobin.h"
 
 
-bool CompareArrivalTimes(Prozess p1, Prozess p2)
-{
+bool CompareArrivalTimes(Prozess p1, Prozess p2){
     if (p1.m_timeArrival == p2.m_timeArrival) return false;
     return (p1.m_timeArrival >= p2.m_timeArrival);
 }
 
-int main()
-{
+void PrintHeader() {
+    system("cls");
+    std::cout << "Prozess Scheduling\nvon Finn Wiskandt, Martyna Dorosewicz, Dennis Venturini\n\n";
+}
+
+void WaitForUserInput(char userInput = {}) {
+    system("pause");
+    PrintHeader();
+}
+
+std::vector<Prozess> FillSimpleProzess(bool withRandomOrder = false, bool isArray = true) {
+
+    std::array<Prozess, 5> firstList;
+    firstList[0] = Prozess(isArray, 0, 22, 0);
+    firstList[1] = Prozess(isArray, 1, 2 , 0);
+    firstList[2] = Prozess(isArray, 2, 3 , 0);
+    firstList[3] = Prozess(isArray, 3, 5 , 0);
+    firstList[4] = Prozess(isArray, 4, 8 , 0);
+
+    if (withRandomOrder){
+        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+        std::shuffle(firstList.begin(), firstList.end(), std::default_random_engine(seed));
+    }
+
+    std::vector<Prozess> tempVectorObject;
+    for (size_t i = 0; i < firstList.size(); i++) {
+        tempVectorObject.push_back(firstList[i]);
+    }
+
+    return tempVectorObject;
+}
+
+void RoundRobinCalculate(int randomAverageWaitingTime = 0) {
+
+    std::vector<Prozess> roundRobin = FillSimpleProzess();
+
+    //RoundRobin
+    int quantum = 3;
+    RoundRobin rr(roundRobin, quantum);
+    rr.Schedule();
+    std::cout << "Round Robin (Q=" << quantum << "):  Durchschnittliche Wartezeit: " << rr.GetReadyTime() << "\n\n";
+
+    std::cout << "Die durschnittliche Wartezeit bei zufaelliger Reihenfolge betraegt: " << randomAverageWaitingTime << "\nUnsere Reihenfolge aus der Vorlesung hat eine durchschnittliche Wartezeit von: " << rr.GetReadyTime();
+    
+    int diffRandomtoPreset = 0;
+    if (rr.GetReadyTime() >= randomAverageWaitingTime){
+        diffRandomtoPreset = rr.GetReadyTime() - randomAverageWaitingTime;
+    }else{
+        diffRandomtoPreset = randomAverageWaitingTime - rr.GetReadyTime();
+    }
+
+    std::cout << "\n\nDadurch laesst sich eine durchschnittliche Differenz von " << diffRandomtoPreset << " errechnen.\n";
+
+}
+
+void RoundRobinRandomCalculate() {
+
+    std::vector<Prozess> roundRobin;
+    int quantum = 3;
+    float randomAverageWaitingTime = 0.0f;
+    int numberOfLoopPasses = 12;
+
+    for (size_t i = 0; i < numberOfLoopPasses; i++){
+        roundRobin = FillSimpleProzess(true);
+        //RoundRobin
+        RoundRobin rr(roundRobin, quantum);
+        rr.Schedule();
+        std::cout << "RoundRobin zufaellige Prozesses Reihenfolge (In folgender Reihenfolge Eingetroffen):\n";
+        for (size_t i = 0; i < roundRobin.size(); i++) {
+            std::cout << "Prozess " << i + 1 << " Bedienzeit: " << roundRobin[i].m_timeToCalculate << "\n";
+        }
+        std::cout << "Round Robin (Q=" << quantum << "):  Durchschnittliche Wartezeit: " << rr.GetReadyTime() << "\n\n";
+        randomAverageWaitingTime += rr.GetReadyTime();
+    }
+
+    randomAverageWaitingTime /= numberOfLoopPasses;
+
+    roundRobin = FillSimpleProzess();
+    std::cout << "RoundRobin Prozesse (In folgender Reihenfolge Eingetroffen):\n";
+    for (size_t i = 0; i < roundRobin.size(); i++) {
+        std::cout << "Prozess " << i + 1 << " Bedienzeit: " << roundRobin[i].m_timeToCalculate << "\n";
+    }
+
+    RoundRobinCalculate(randomAverageWaitingTime);
+
+
+    WaitForUserInput();
+}
+
+
+void FirstComeFirstServedAndShortestJobFirstCalculate() {
+
+    std::vector<Prozess> simpleProzess = FillSimpleProzess();
+
+    FirstComeFirstServe fcfs(simpleProzess);
+    fcfs.Schedule();
+
+    PrintHeader();
+    std::cout << "FCFS und SJF Prozesse (In folgender Reihenfolge Eingetroffen):\n";
+    for (size_t i = 0; i < simpleProzess.size(); i++){
+        std::cout << "Prozess " << i + 1 << " Bedienzeit: " << simpleProzess[i].m_timeToCalculate << "\n";
+    }
+    std::cout << "\nFirst Come First Serve Durchschnittliche Wartezeit: " << fcfs.GetReadyTime() << "\n\n";
+
+    simpleProzess = FillSimpleProzess();
+
+    //ShortestJobFirst
+    ShortestJobFirst sjf(simpleProzess);
+    sjf.Schedule();
+    std::cout << "Shortest Job First     Durchschnittliche Wartezeit: " << sjf.GetReadyTime() << "\n\n";
+
+    WaitForUserInput();
+}
+
+std::vector<Prozess> FillLaxity(bool isArray = true) {
+
+    std::array<Prozess, 3> laxityList;
+    laxityList[0] = Prozess(isArray, 0, 8, 10);
+    laxityList[1] = Prozess(isArray, 0, 5, 9);
+    laxityList[2] = Prozess(isArray, 0, 4, 9);
+
+    std::vector<Prozess> tempVectorObject;
+    for (size_t i = 0; i < laxityList.size(); i++) {
+        tempVectorObject.push_back(laxityList[i]);
+    }
+
+    return tempVectorObject;
+}
+
+void LeastLaxityFirstCalculate() {
+
+    std::vector<Prozess> laxity = FillLaxity();
+
+    //LeastLaxityFirst
+    LeastLaxityFirst llf(laxity);
+    llf.Schedule();
+    std::cout << "LLF (In folgender Reihenfolge Eingetroffen):\n";
+    for (size_t i = 0; i < laxity.size(); i++) {
+        std::cout << "Prozess " << i + 1 << " Bedienzeit: " << laxity[i].m_timeToCalculate << "\n";
+    }
+    std::cout << "Least Laxity First  Durchschnittliche Wartezeit: " << llf.GetReadyTime() << "\n\n";
+
+    WaitForUserInput();
+}
+
+std::vector<Prozess> Filldeadline(bool isArray = true) {
+
+    std::array<Prozess, 4> deadlineList;
+    deadlineList[0] = Prozess(isArray, 0, 4, 5);
+    deadlineList[1] = Prozess(isArray, 0, 1, 7);
+    deadlineList[2] = Prozess(isArray, 0, 2, 7);
+    deadlineList[3] = Prozess(isArray, 0, 5, 13);
+
+    std::vector<Prozess> tempVectorObject;
+    for (size_t i = 0; i < deadlineList.size(); i++) {
+        tempVectorObject.push_back(deadlineList[i]);
+    }
+
+    return tempVectorObject;
+}
+
+void EarliestDeadlineFirstCalculate() {
+
+    std::vector<Prozess> deadline = Filldeadline();
+
+    //EarliestDeadlineFirst
+    EarliestDeadlineFirst edf(deadline);
+    edf.Schedule();
+    std::cout << "EDF Prozesses (In folgender Reihenfolge Eingetroffen):\n";
+    for (size_t i = 0; i < deadline.size(); i++) {
+        std::cout << "Prozess " << i + 1 << " Bedienzeit: " << deadline[i].m_timeToCalculate << "\n";
+    }
+    std::cout << "Earliest Deadline First  Durchschnittliche Wartezeit: " << edf.GetReadyTime() << "\n\n";
+
+    WaitForUserInput();
+}
+
+void ExamplesOrCustomProzessesUserInput() {
+
+    PrintHeader();
+
+    bool isArray = false;
+    char usePresetProzessesUserInput;
+    std::cout << "Vorlesungsbeispiele fuer berechnung benutzten?(y/n): ";
+    std::cin.get(usePresetProzessesUserInput);
+
+    if (usePresetProzessesUserInput != 'y'){
+        Sleep(2000);
+        return;
+    }
+
+    Sleep(1000);
+
+    //FCFS and SJF and RoundRobin
+    FirstComeFirstServedAndShortestJobFirstCalculate();
+
+    //Laxity
+    LeastLaxityFirstCalculate();
+
+    //Earliest Deadline First
+    EarliestDeadlineFirstCalculate();
+
+    //Round Robin with random 
+    RoundRobinRandomCalculate();
+}
+
+int main(){
+
+    std::cout << "Prozess Scheduling\nby Finn Wiskandt, Martyna Dorosewicz, Dennis Venturini\n\n";
+    system("pause");
+
+    ExamplesOrCustomProzessesUserInput();
+
     int anzProzesse = 0;
     std::vector<Prozess> prozesse;
     int tempAnkunft = 0;
@@ -79,14 +294,14 @@ int main()
 
     
     ///////////////////////////////////////////////test
-    Prozess tempProzess1(1, 1, 15);
+   /* Prozess tempProzess1(1, 1, 15);
     prozesse.push_back(tempProzess1);
     Prozess tempProzess2(2, 4, 10);
     prozesse.push_back(tempProzess2);
     Prozess tempProzess3(4, 1, 10);
     prozesse.push_back(tempProzess3);
     Prozess tempProzess4(1, 2, 5);
-    prozesse.push_back(tempProzess4);
+    prozesse.push_back(tempProzess4);*/
     //////////////////////////////////////////////
 
     std::stable_sort(prozesse.begin(), prozesse.end(), CompareArrivalTimes);

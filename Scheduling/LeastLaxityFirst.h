@@ -14,7 +14,7 @@ class LeastLaxityFirst: public SchedulingStrategy {
 private:
     std::vector<Prozess> prozesseOpen;
     std::vector<Prozess> prozesseDone;
-    int timeNow=0;
+    unsigned int timeNow=0;
     int sizeAll;
 
 public:
