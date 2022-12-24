@@ -55,7 +55,7 @@ std::vector<Prozess> FillSimpleProzess(bool withRandomOrder = false, bool isArra
     return tempVectorObject;
 }
 
-void RoundRobinCalculate(int randomAverageWaitingTime = 0) {
+void RoundRobinCalculate(float randomAverageWaitingTime = 0) {
 
     std::vector<Prozess> roundRobin = FillSimpleProzess();
 
@@ -66,8 +66,9 @@ void RoundRobinCalculate(int randomAverageWaitingTime = 0) {
     std::cout << "Round Robin (Q=" << quantum << "):  Durchschnittliche Wartezeit: " << rr.GetReadyTime() << "\n\n";
 
     std::cout << "Die durschnittliche Wartezeit bei zufaelliger Reihenfolge betraegt: " << randomAverageWaitingTime << "\nUnsere Reihenfolge aus der Vorlesung hat eine durchschnittliche Wartezeit von: " << rr.GetReadyTime();
-    
-    int diffRandomtoPreset = 0;
+    std::cout << "\nEs ergibt sich ein Muster, wenn die Prozesse mit der groesten Bedienzeit als letztes drankommen\nist die durchschnittliche Wartezeit geringer, da Prozesse deren Bedienzeit kleiner";
+    std::cout << "\nist als die des Quantums andere Prozesse durchschnittlich weniger lang warten lassen";
+    float diffRandomtoPreset = 0;
     if (rr.GetReadyTime() >= randomAverageWaitingTime){
         diffRandomtoPreset = rr.GetReadyTime() - randomAverageWaitingTime;
     }else{
