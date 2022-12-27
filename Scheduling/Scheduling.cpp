@@ -131,7 +131,7 @@ void FirstComeFirstServedAndShortestJobFirstCalculate() {
     simpleProzess = FillSimpleProzess();
 
     //ShortestJobFirst
-    ShortestJobFirst sjf(simpleProzess);
+    ShortestJobFirst sjf(simpleProzess, false);
     sjf.Schedule();
     std::cout << "Shortest Job First     Durchschnittliche Wartezeit: " << sjf.GetReadyTime() << "\n\n";
 
@@ -319,7 +319,7 @@ int main(){
     if (strategie == 2)
     {
         //ShortestJobFirst
-        ShortestJobFirst sjf(prozesse);
+        ShortestJobFirst sjf(prozesse, true);
         sjf.Schedule();
         std::cout << "Shortest Job First:  Durchschnittliche Wartezeit:" << sjf.GetReadyTime() << std::endl;
     }
