@@ -85,9 +85,10 @@ void ShortestJobFirst::ScheduleNonPreemtiv()
 		while (m_Prozesses[i].m_progession < m_Prozesses[i].m_timeToCalculate) {
 			m_Prozesses[i].m_progession++;
 			m_timePassed++;
+			m_Prozesses[i].m_timeTookToCalculate = m_timePassed;
 		}
 
-		m_Prozesses[i].m_timeTookToCalculate = m_timePassed;
+		
 	}
 
 	CalculateReadyTime();
