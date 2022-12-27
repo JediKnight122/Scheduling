@@ -4,7 +4,7 @@ void SchedulingStrategy::CalculateReadyTime()
 {
 	for (size_t i = 0; i< m_Prozesses.size(); i++)
 	{
-		m_ReadyTime += m_Prozesses[i].m_timeTookToCalculate;
+		m_ReadyTime += (m_Prozesses[i].m_timeTookToCalculate- m_Prozesses[i].m_timeArrival);
 	}
 
 	m_ReadyTime /= m_Prozesses.size();
