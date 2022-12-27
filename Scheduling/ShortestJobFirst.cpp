@@ -36,8 +36,8 @@ void ShortestJobFirst::SchedulePreemtiv()
 				if (m_Prozesses[j].m_timeArrival <= m_timePassed && m_Prozesses[i].m_progession < m_Prozesses[i].m_timeToCalculate)
 				{
 
-						m_Prozesses[j].m_progession++;
-						m_timePassed++;
+					m_Prozesses[j].m_progession++;
+					m_timePassed++;
 
 					m_Prozesses[j].m_timeTookToCalculate = m_timePassed;
 					break;

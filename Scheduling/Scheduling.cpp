@@ -65,9 +65,9 @@ void RoundRobinCalculate(float randomAverageWaitingTime = 0) {
     rr.Schedule();
     std::cout << "Round Robin (Q=" << quantum << "):  Durchschnittliche Wartezeit: " << rr.GetReadyTime() << "\n\n";
 
-    std::cout << "Die durschnittliche Wartezeit bei zufaelliger Reihenfolge betraegt: " << randomAverageWaitingTime << "\nUnsere Reihenfolge aus der Vorlesung hat eine durchschnittliche Wartezeit von: " << rr.GetReadyTime();
+    std::cout << "Die durschnittliche Wartezeit der durchschnittlichen Wartezeiten bei zufaelliger Reihenfolge betraegt: " << randomAverageWaitingTime << "\nUnsere Reihenfolge aus der Vorlesung hat eine durchschnittliche Wartezeit von: " << rr.GetReadyTime();
     std::cout << "\nEs ergibt sich ein Muster, wenn die Prozesse mit der groesten Bedienzeit als letztes drankommen\nist die durchschnittliche Wartezeit geringer, da Prozesse deren Bedienzeit kleiner";
-    std::cout << "\nist als die des Quantums andere Prozesse durchschnittlich weniger lang warten lassen";
+    std::cout << "\nsind, andere Prozesse durchschnittlich weniger lang warten lassen. Wenn die Bedienzeit kleiner als das Quantum ist\nmerkt man einen bedeutenden unterschied der Durchschnittlichen Wartezeit.";
     float diffRandomtoPreset = 0;
     if (rr.GetReadyTime() >= randomAverageWaitingTime){
         diffRandomtoPreset = rr.GetReadyTime() - randomAverageWaitingTime;
@@ -201,33 +201,76 @@ void EarliestDeadlineFirstCalculate() {
     WaitForUserInput();
 }
 
+std::vector<Prozess> FillPreemptiveSJF(bool isArray = true) {
+
+    std::array<Prozess, 5> preemptiveList;
+    preemptiveList[0] = Prozess(0, 22);
+    preemptiveList[1] = Prozess(0, 2);
+    preemptiveList[2] = Prozess(4, 3);
+    preemptiveList[3] = Prozess(4, 5);
+    preemptiveList[4] = Prozess(4, 8);
+
+    std::vector<Prozess> tempVectorObject;
+    for (size_t i = 0; i < preemptiveList.size(); i++) {
+        tempVectorObject.push_back(preemptiveList[i]);
+    }
+
+    return tempVectorObject;
+}
+
+void ShortestJobFirstPreemptiveCalculate() {
+
+    std::vector<Prozess> preemtiveSJF = FillPreemptiveSJF();
+
+    PrintHeader();
+
+
+    //ShortestJobFirst Preemptive
+    ShortestJobFirst sjfPreemptive(preemtiveSJF, true);
+    sjfPreemptive.Schedule();
+    std::cout << "Shortest Job First Preemptive  Durchschnittliche Wartezeit: " << sjfPreemptive.GetReadyTime() << "\n\n";
+
+    preemtiveSJF = FillPreemptiveSJF();
+
+    //ShortestJobFirst Non-Preemptive
+    ShortestJobFirst sjf(preemtiveSJF, false);
+    sjf.Schedule();
+    std::cout << "Shortest Job First Non-Preemptive  Durchschnittliche Wartezeit: " << sjf.GetReadyTime() << "\n\n";
+
+    WaitForUserInput();
+
+}
+
 void ExamplesOrCustomProzessesUserInput() {
 
     PrintHeader();
 
-    bool isArray = false;
     char usePresetProzessesUserInput;
     std::cout << "Vorlesungsbeispiele fuer berechnung benutzten?(y/n): ";
     std::cin.get(usePresetProzessesUserInput);
 
     if (usePresetProzessesUserInput != 'y'){
-        Sleep(2000);
+        Sleep(1000);
         return;
     }
 
     Sleep(1000);
 
-    //FCFS and SJF and RoundRobin
-    FirstComeFirstServedAndShortestJobFirstCalculate();
+    ////FCFS and SJF and RoundRobin
+    //FirstComeFirstServedAndShortestJobFirstCalculate();
 
-    //Laxity
-    LeastLaxityFirstCalculate();
+    ////Laxity
+    //LeastLaxityFirstCalculate();
 
-    //Earliest Deadline First
-    EarliestDeadlineFirstCalculate();
+    ////Earliest Deadline First
+    //EarliestDeadlineFirstCalculate();
 
-    //Round Robin with random 
-    RoundRobinRandomCalculate();
+    ////Round Robin with random 
+    //RoundRobinRandomCalculate();
+
+    //Shortest Job First with random ready times
+    ShortestJobFirstPreemptiveCalculate();
+
 }
 
 int main(){
