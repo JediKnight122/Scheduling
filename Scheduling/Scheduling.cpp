@@ -256,17 +256,17 @@ void ExamplesOrCustomProzessesUserInput() {
 
     Sleep(1000);
 
-    ////FCFS and SJF and RoundRobin
-    //FirstComeFirstServedAndShortestJobFirstCalculate();
+    //FCFS and SJF and RoundRobin
+    FirstComeFirstServedAndShortestJobFirstCalculate();
 
-    ////Laxity
-    //LeastLaxityFirstCalculate();
+    //Laxity
+    LeastLaxityFirstCalculate();
 
-    ////Earliest Deadline First
-    //EarliestDeadlineFirstCalculate();
+    //Earliest Deadline First
+    EarliestDeadlineFirstCalculate();
 
-    ////Round Robin with random 
-    //RoundRobinRandomCalculate();
+    //Round Robin with random 
+    RoundRobinRandomCalculate();
 
     //Shortest Job First with random ready times
     ShortestJobFirstPreemptiveCalculate();
