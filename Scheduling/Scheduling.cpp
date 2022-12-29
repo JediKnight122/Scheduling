@@ -201,7 +201,7 @@ void EarliestDeadlineFirstCalculate() {
     WaitForUserInput();
 }
 
-std::vector<Prozess> FillPreemptiveSJF(bool isArray = true) {
+std::vector<Prozess> FillPreemptiveSJF(bool withRandomOrder = false, bool isArray = true) {
 
     std::array<Prozess, 5> preemptiveList;
     preemptiveList[0] = Prozess(0, 22);
@@ -209,6 +209,18 @@ std::vector<Prozess> FillPreemptiveSJF(bool isArray = true) {
     preemptiveList[2] = Prozess(4, 3);
     preemptiveList[3] = Prozess(4, 5);
     preemptiveList[4] = Prozess(4, 8);
+
+    if (withRandomOrder) {
+        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+        std::shuffle(preemptiveList.begin(), preemptiveList.end(), std::default_random_engine(seed));
+
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> distr(0, 10);
+        for (size_t i = 0; i < preemptiveList.size(); i++){
+            preemptiveList[i].m_timeArrival = distr(gen);
+        }
+    }
 
     std::vector<Prozess> tempVectorObject;
     for (size_t i = 0; i < preemptiveList.size(); i++) {
@@ -220,22 +232,37 @@ std::vector<Prozess> FillPreemptiveSJF(bool isArray = true) {
 
 void ShortestJobFirstPreemptiveCalculate() {
 
-    std::vector<Prozess> preemtiveSJF = FillPreemptiveSJF();
-
     PrintHeader();
 
+    std::vector<Prozess> preemtiveSJF = FillPreemptiveSJF();
+    float randomAverageWaitingTime = 0.0f;
+    int numberOfLoopPasses = 12;
 
-    //ShortestJobFirst Preemptive
-    ShortestJobFirst sjfPreemptive(preemtiveSJF, true);
-    sjfPreemptive.Schedule();
-    std::cout << "Shortest Job First Preemptive  Durchschnittliche Wartezeit: " << sjfPreemptive.GetReadyTime() << "\n\n";
-
-    preemtiveSJF = FillPreemptiveSJF();
-
-    //ShortestJobFirst Non-Preemptive
-    ShortestJobFirst sjf(preemtiveSJF, false);
-    sjf.Schedule();
-    std::cout << "Shortest Job First Non-Preemptive  Durchschnittliche Wartezeit: " << sjf.GetReadyTime() << "\n\n";
+    for (size_t i = 0; i < numberOfLoopPasses; i++) {
+        preemtiveSJF = FillPreemptiveSJF(true);
+        //ShortestJobFirst Preemptive
+        ShortestJobFirst sjfPreemptive(preemtiveSJF, true);
+        sjfPreemptive.Schedule();
+        std::cout << "Shortest Job First zufaellige Prozesses Reihenfolge (In folgender Reihenfolge Eingetroffen):\n";
+        for (size_t i = 0; i < preemtiveSJF.size(); i++) {
+            std::cout << "Prozess " << i + 1 << " Bedienzeit: " << preemtiveSJF[i].m_timeToCalculate << "\n";
+        }
+        std::cout << "Shortest Job First Preemptive  Durchschnittliche Wartezeit: " << sjfPreemptive.GetReadyTime() << "\n\n";
+        randomAverageWaitingTime += sjfPreemptive.GetReadyTime();
+    }
+    
+    for (size_t i = 0; i < numberOfLoopPasses; i++) {
+        preemtiveSJF = FillPreemptiveSJF(true);
+        //ShortestJobFirst Non-Preemptive
+        ShortestJobFirst sjf(preemtiveSJF, false);
+        sjf.Schedule();
+        std::cout << "Shortest Job First zufaellige Prozesses Reihenfolge (In folgender Reihenfolge Eingetroffen):\n";
+        for (size_t i = 0; i < preemtiveSJF.size(); i++) {
+            std::cout << "Prozess " << i + 1 << " Bedienzeit: " << preemtiveSJF[i].m_timeToCalculate << "\n";
+        }
+        std::cout << "Shortest Job First Non-Preemptive  Durchschnittliche Wartezeit: " << sjf.GetReadyTime() << "\n\n";
+        randomAverageWaitingTime += sjf.GetReadyTime();
+    }
 
     WaitForUserInput();
 
@@ -257,16 +284,16 @@ void ExamplesOrCustomProzessesUserInput() {
     Sleep(1000);
 
     //FCFS and SJF and RoundRobin
-    FirstComeFirstServedAndShortestJobFirstCalculate();
+    //FirstComeFirstServedAndShortestJobFirstCalculate();
 
-    //Laxity
-    LeastLaxityFirstCalculate();
+    ////Laxity
+    //LeastLaxityFirstCalculate();
 
-    //Earliest Deadline First
-    EarliestDeadlineFirstCalculate();
+    ////Earliest Deadline First
+    //EarliestDeadlineFirstCalculate();
 
-    //Round Robin with random 
-    RoundRobinRandomCalculate();
+    ////Round Robin with random 
+    //RoundRobinRandomCalculate();
 
     //Shortest Job First with random ready times
     ShortestJobFirstPreemptiveCalculate();

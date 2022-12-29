@@ -4,4 +4,9 @@ C:\Users\denni\Desktop\BS-SchedulingBonus\SchedulingCalculator\Scheduling\Schedu
           [
               _Rep=std::chrono::system_clock::rep
           ]
+C:\Users\denni\Desktop\BS-SchedulingBonus\SchedulingCalculator\Scheduling\Scheduling.cpp(214,23): warning C4244: 'initializing': conversion from '_Rep' to 'unsigned int', possible loss of data
+          with
+          [
+              _Rep=std::chrono::system_clock::rep
+          ]
   Scheduling.vcxproj -> C:\Users\denni\Desktop\BS-SchedulingBonus\SchedulingCalculator\x64\Debug\Scheduling.exe
