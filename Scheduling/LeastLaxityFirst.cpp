@@ -1,5 +1,5 @@
 //
-// Created by Marty on 20.12.2022.
+// Prozess Scheduling von Finn Wiskandt, Martyna Dorosewicz, Dennis Venturini
 //
 
 #include "LeastLaxityFirst.h"
@@ -36,7 +36,7 @@ void LeastLaxityFirst::Schedule() {
     for (size_t i = 0; i < prozesseDone.size(); i++) {
         m_ReadyTime += prozesseDone[i].m_timeTookToCalculate;
     }
-    m_ReadyTime/=sizeAll;
+    m_ReadyTime /= sizeAll;
 }
 
 void LeastLaxityFirst::Sort(std::vector<Prozess> &pProzesses) {

@@ -1,6 +1,7 @@
 #include "EarliestDeadlineFirst.h"
 #include <algorithm>
 
+// Prozess Scheduling von Finn Wiskandt, Martyna Dorosewicz, Dennis Venturini
 void EarliestDeadlineFirst::Schedule() {
     sizeAll = m_Prozesses.size();
 

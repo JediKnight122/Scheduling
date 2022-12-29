@@ -1,5 +1,5 @@
 #include "SchedulingStrategy.h"
-
+// Prozess Scheduling von Finn Wiskandt, Martyna Dorosewicz, Dennis Venturini
 void SchedulingStrategy::CalculateReadyTime()
 {
 	for (size_t i = 0; i< m_Prozesses.size(); i++)

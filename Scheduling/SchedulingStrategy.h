@@ -1,7 +1,7 @@
 #pragma once
 #include "Prozess.h"
 #include <vector>
-
+// Prozess Scheduling von Finn Wiskandt, Martyna Dorosewicz, Dennis Venturini
 
 class SchedulingStrategy
 {

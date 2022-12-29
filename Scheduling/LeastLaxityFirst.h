@@ -1,5 +1,5 @@
 //
-// Created by Marty on 20.12.2022.
+// Prozess Scheduling von Finn Wiskandt, Martyna Dorosewicz, Dennis Venturini
 //
 
 #ifndef SCHEDULINGCALCULATOR_MAIN_LEASTLAXITYFIRST_H

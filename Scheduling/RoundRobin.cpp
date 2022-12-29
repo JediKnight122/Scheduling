@@ -1,5 +1,6 @@
 #include "RoundRobin.h"
 
+// Prozess Scheduling von Finn Wiskandt, Martyna Dorosewicz, Dennis Venturini
 void RoundRobin::Schedule()
 {
 	bool allProcessesFinished = false;

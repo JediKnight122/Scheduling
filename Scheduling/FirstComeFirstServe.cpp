@@ -1,6 +1,6 @@
 #include "FirstComeFirstServe.h"
 
-
+// Prozess Scheduling von Finn Wiskandt, Martyna Dorosewicz, Dennis Venturini
 
 void FirstComeFirstServe::Schedule()
 {

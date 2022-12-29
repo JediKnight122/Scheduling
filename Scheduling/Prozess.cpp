@@ -1,5 +1,5 @@
 #include "Prozess.h"
-
+// Prozess Scheduling von Finn Wiskandt, Martyna Dorosewicz, Dennis Venturini
 Prozess::Prozess(unsigned pTimeArrival, unsigned pTimeCalculation) : m_timeArrival(pTimeArrival),
                                                                      m_progession(0), m_timeToCalculate(pTimeCalculation)
 {

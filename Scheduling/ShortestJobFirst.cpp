@@ -2,6 +2,8 @@
 
 #include <algorithm>
 
+// Prozess Scheduling von Finn Wiskandt, Martyna Dorosewicz, Dennis Venturini
+
 bool ShortestJobFirst::CompareJobLenghts(Prozess p1, Prozess p2)
 {
     if (p1.m_timeToCalculate == p2.m_timeToCalculate) return false;

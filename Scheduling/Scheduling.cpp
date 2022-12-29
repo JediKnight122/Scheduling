@@ -1,5 +1,5 @@
 // Scheduling.cpp : Diese Datei enthält die Funktion "main". Hier beginnt und endet die Ausführung des Programms.
-//
+// Prozess Scheduling von Finn Wiskandt, Martyna Dorosewicz, Dennis Venturini
 
 #include <algorithm>
 #include <iostream>
@@ -37,10 +37,10 @@ std::vector<Prozess> FillSimpleProzess(bool withRandomOrder = false, bool isArra
 
     std::array<Prozess, 5> firstList;
     firstList[0] = Prozess(isArray, 0, 22, 0);
-    firstList[1] = Prozess(isArray, 1, 2 , 0);
-    firstList[2] = Prozess(isArray, 2, 3 , 0);
-    firstList[3] = Prozess(isArray, 3, 5 , 0);
-    firstList[4] = Prozess(isArray, 4, 8 , 0);
+    firstList[1] = Prozess(isArray, 0, 2 , 0);
+    firstList[2] = Prozess(isArray, 0, 3 , 0);
+    firstList[3] = Prozess(isArray, 0, 5 , 0);
+    firstList[4] = Prozess(isArray, 0, 8 , 0);
 
     if (withRandomOrder){
         unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
@@ -162,7 +162,7 @@ void LeastLaxityFirstCalculate() {
     llf.Schedule();
     std::cout << "LLF (In folgender Reihenfolge Eingetroffen):\n";
     for (size_t i = 0; i < laxity.size(); i++) {
-        std::cout << "Prozess " << i + 1 << " Bedienzeit: " << laxity[i].m_timeToCalculate << "\n";
+        std::cout << "Prozess " << i + 1 << " Bedienzeit: " << laxity[i].m_timeToCalculate << " Deadline: "<<laxity[i].m_deadline <<"\n";
     }
     std::cout << "Least Laxity First  Durchschnittliche Wartezeit: " << llf.GetReadyTime() << "\n\n";
 
@@ -194,7 +194,7 @@ void EarliestDeadlineFirstCalculate() {
     edf.Schedule();
     std::cout << "EDF Prozesses (In folgender Reihenfolge Eingetroffen):\n";
     for (size_t i = 0; i < deadline.size(); i++) {
-        std::cout << "Prozess " << i + 1 << " Bedienzeit: " << deadline[i].m_timeToCalculate << "\n";
+        std::cout << "Prozess " << i + 1 << " Bedienzeit: " << deadline[i].m_timeToCalculate << " Deadline: "<<deadline[i].m_deadline << "\n";
     }
     std::cout << "Earliest Deadline First  Durchschnittliche Wartezeit: " << edf.GetReadyTime() << "\n\n";
 
