@@ -39,13 +39,14 @@ void ShortestJobFirst::SchedulePreemtiv()
 				{
 
 					m_Prozesses[j].m_progession++;
-					m_timePassed++;
+					
 
 					m_Prozesses[j].m_timeTookToCalculate = m_timePassed;
 					break;
 				}
 			}
 			i--;
+			m_timePassed++;
 			continue;
 		}
 		while (m_Prozesses[i].m_progession < m_Prozesses[i].m_timeToCalculate) {
@@ -78,10 +79,12 @@ void ShortestJobFirst::ScheduleNonPreemtiv()
 						m_timePassed++;
 					}
 					m_Prozesses[j].m_timeTookToCalculate = m_timePassed;
+					m_timePassed--; //Einmal Zeit verringern, da sie gleich unten auf jeden Fall einmal hochgezählt wird
 					break;
 				}
 			}
 			i--;
+			m_timePassed++; //Wenn keiner bereit ist: Zeit erhöhen
 			continue;
 		}
 		while (m_Prozesses[i].m_progession < m_Prozesses[i].m_timeToCalculate) {
