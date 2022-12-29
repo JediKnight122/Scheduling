@@ -234,36 +234,57 @@ void ShortestJobFirstPreemptiveCalculate() {
 
     PrintHeader();
 
-    std::vector<Prozess> preemtiveSJF = FillPreemptiveSJF();
+    std::vector<Prozess> preemtiveSJF;
+    std::vector<Prozess> nonPreemtiveSJF;
     float randomAverageWaitingTime = 0.0f;
-    int numberOfLoopPasses = 12;
+    int numberOfLoopPasses = 3;
 
-    for (size_t i = 0; i < numberOfLoopPasses; i++) {
-        preemtiveSJF = FillPreemptiveSJF(true);
+    {
+
+        preemtiveSJF = FillPreemptiveSJF();
+        nonPreemtiveSJF = preemtiveSJF;
+
         //ShortestJobFirst Preemptive
         ShortestJobFirst sjfPreemptive(preemtiveSJF, true);
         sjfPreemptive.Schedule();
-        std::cout << "Shortest Job First zufaellige Prozesses Reihenfolge (In folgender Reihenfolge Eingetroffen):\n";
+        std::cout << "Shortest Job First Vorlesungs Prozesse (In folgender Reihenfolge Eingetroffen):\n";
         for (size_t i = 0; i < preemtiveSJF.size(); i++) {
-            std::cout << "Prozess " << i + 1 << " Bedienzeit: " << preemtiveSJF[i].m_timeToCalculate << "\n";
+            std::cout << "Prozess " << i + 1 << " Bedienzeit: " << preemtiveSJF[i].m_timeToCalculate << "   Ankunftszeit: " << preemtiveSJF[i].m_timeArrival << "\n";
         }
-        std::cout << "Shortest Job First Preemptive  Durchschnittliche Wartezeit: " << sjfPreemptive.GetReadyTime() << "\n\n";
+        std::cout << "\nShortest Job First Preemptive  Durchschnittliche Wartezeit: " << sjfPreemptive.GetReadyTime() << "\n\n";
         randomAverageWaitingTime += sjfPreemptive.GetReadyTime();
-    }
-    
-    for (size_t i = 0; i < numberOfLoopPasses; i++) {
-        preemtiveSJF = FillPreemptiveSJF(true);
-        //ShortestJobFirst Non-Preemptive
-        ShortestJobFirst sjf(preemtiveSJF, false);
+
+        ShortestJobFirst sjf(nonPreemtiveSJF, false);
         sjf.Schedule();
-        std::cout << "Shortest Job First zufaellige Prozesses Reihenfolge (In folgender Reihenfolge Eingetroffen):\n";
-        for (size_t i = 0; i < preemtiveSJF.size(); i++) {
-            std::cout << "Prozess " << i + 1 << " Bedienzeit: " << preemtiveSJF[i].m_timeToCalculate << "\n";
-        }
         std::cout << "Shortest Job First Non-Preemptive  Durchschnittliche Wartezeit: " << sjf.GetReadyTime() << "\n\n";
         randomAverageWaitingTime += sjf.GetReadyTime();
     }
 
+    WaitForUserInput();
+
+    for (size_t i = 0; i < numberOfLoopPasses; i++) {
+
+        preemtiveSJF = FillPreemptiveSJF(true);
+        nonPreemtiveSJF = preemtiveSJF;
+
+        //ShortestJobFirst Preemptive
+        ShortestJobFirst sjfPreemptive(preemtiveSJF, true);
+        sjfPreemptive.Schedule();
+        std::cout << "Shortest Job First zufaellige Prozesse Reihenfolge (In folgender Reihenfolge Eingetroffen):\n";
+        for (size_t i = 0; i < preemtiveSJF.size(); i++) {
+            std::cout << "Prozess " << i + 1 << " Bedienzeit: " << preemtiveSJF[i].m_timeToCalculate << "   Ankunftszeit: " << preemtiveSJF[i].m_timeArrival << "\n";
+        }
+        std::cout << "\nShortest Job First Preemptive  Durchschnittliche Wartezeit: " << sjfPreemptive.GetReadyTime() << "\n\n";
+        randomAverageWaitingTime += sjfPreemptive.GetReadyTime();
+
+        //ShortestJobFirst Non-Preemptive
+        ShortestJobFirst sjf(nonPreemtiveSJF, false);
+        sjf.Schedule();
+        std::cout << "Shortest Job First Non-Preemptive  Durchschnittliche Wartezeit: " << sjf.GetReadyTime() << "\n\n";
+        randomAverageWaitingTime += sjf.GetReadyTime();
+
+    }
+    
     WaitForUserInput();
 
 }
@@ -284,16 +305,16 @@ void ExamplesOrCustomProzessesUserInput() {
     Sleep(1000);
 
     //FCFS and SJF and RoundRobin
-    //FirstComeFirstServedAndShortestJobFirstCalculate();
+    FirstComeFirstServedAndShortestJobFirstCalculate();
 
-    ////Laxity
-    //LeastLaxityFirstCalculate();
+    //Laxity
+    LeastLaxityFirstCalculate();
 
-    ////Earliest Deadline First
-    //EarliestDeadlineFirstCalculate();
+    //Earliest Deadline First
+    EarliestDeadlineFirstCalculate();
 
-    ////Round Robin with random 
-    //RoundRobinRandomCalculate();
+    //Round Robin with random 
+    RoundRobinRandomCalculate();
 
     //Shortest Job First with random ready times
     ShortestJobFirstPreemptiveCalculate();
@@ -362,6 +383,7 @@ int main(){
             prozesse.push_back(tempProzess);
         }
     }
+      
 
     
     ///////////////////////////////////////////////test
@@ -391,7 +413,9 @@ int main(){
         //ShortestJobFirst
         ShortestJobFirst sjf(prozesse, true);
         sjf.Schedule();
-        std::cout << "Shortest Job First:  Durchschnittliche Wartezeit:" << sjf.GetReadyTime() << std::endl;
+        std::cout << "Shortest Job First Non Preemtive:  Durchschnittliche Wartezeit:" << sjf.GetReadyTime() << std::endl;
+
+        std::cout << "Shortest Job First Preemtive:  Durchschnittliche Wartezeit:" << sjf.GetReadyTime() << std::endl;
     }
     if (strategie == 3)
     {
