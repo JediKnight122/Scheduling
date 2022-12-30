@@ -413,7 +413,11 @@ int main(){
         //ShortestJobFirst
         ShortestJobFirst sjf(prozesse, true);
         sjf.Schedule();
-        std::cout << "Shortest Job First Non Preemtive:  Durchschnittliche Wartezeit:" << sjf.GetReadyTime() << std::endl;
+
+        ShortestJobFirst sjfN(prozesse, false);
+        sjfN.Schedule();
+
+        std::cout << "Shortest Job First Non Preemtive:  Durchschnittliche Wartezeit:" << sjfN.GetReadyTime() << std::endl;
 
         std::cout << "Shortest Job First Preemtive:  Durchschnittliche Wartezeit:" << sjf.GetReadyTime() << std::endl;
     }
