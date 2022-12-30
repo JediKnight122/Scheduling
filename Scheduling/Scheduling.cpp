@@ -385,17 +385,8 @@ int main(){
     }
       
 
-    
-    ///////////////////////////////////////////////test
-   /* Prozess tempProzess1(1, 1, 15);
-    prozesse.push_back(tempProzess1);
-    Prozess tempProzess2(2, 4, 10);
-    prozesse.push_back(tempProzess2);
-    Prozess tempProzess3(4, 1, 10);
-    prozesse.push_back(tempProzess3);
-    Prozess tempProzess4(1, 2, 5);
-    prozesse.push_back(tempProzess4);*/
-    //////////////////////////////////////////////
+  /////
+
 
     std::stable_sort(prozesse.begin(), prozesse.end(), CompareArrivalTimes);
 

@@ -11,6 +11,7 @@ public:
     ShortestJobFirst(std::vector<Prozess>& pProzesses, bool preemtiv);
 
 private:
+    static bool CompareArrivalTimes(Prozess p1, Prozess p2);
     static bool CompareJobLenghts(Prozess p1, Prozess p2);
     bool m_preemtiv = false;
     

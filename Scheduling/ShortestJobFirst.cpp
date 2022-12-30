@@ -6,18 +6,30 @@
 
 bool ShortestJobFirst::CompareJobLenghts(Prozess p1, Prozess p2)
 {
-    if (p1.m_timeRemainingToCalculate == p2.m_timeRemainingToCalculate) return false;
+	if (p1.m_timeRemainingToCalculate == p2.m_timeRemainingToCalculate) {
+		return p1.m_timeArrival < p2.m_timeArrival;
+		//return false;
+	}
     return (p1.m_timeRemainingToCalculate < p2.m_timeRemainingToCalculate);
+}
+
+bool ShortestJobFirst::CompareArrivalTimes(Prozess p1, Prozess p2)
+{
+	if (p1.m_timeArrival == p2.m_timeArrival) return false;
+	return (p1.m_timeArrival <= p2.m_timeArrival);
 }
 
 ShortestJobFirst::ShortestJobFirst(std::vector<Prozess>& pProzesses, bool preemtiv): SchedulingStrategy(pProzesses)
 {
+	std::stable_sort(m_Prozesses.begin(), m_Prozesses.end(), &ShortestJobFirst::CompareArrivalTimes);
     std::stable_sort(m_Prozesses.begin(), m_Prozesses.end(), &ShortestJobFirst::CompareJobLenghts);
 	m_preemtiv = preemtiv;
 }
 
 void ShortestJobFirst::Schedule()
 {
+	
+
 	if (m_preemtiv) SchedulePreemtiv();
 	else ScheduleNonPreemtiv();
 	
@@ -25,6 +37,7 @@ void ShortestJobFirst::Schedule()
 
 void ShortestJobFirst::SchedulePreemtiv()
 {
+	
 	for (size_t i = 0; i < m_Prozesses.size(); i++)
 	{
 		if (m_Prozesses[i].m_timeArrival > m_timePassed)
