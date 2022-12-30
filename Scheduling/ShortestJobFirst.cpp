@@ -6,8 +6,8 @@
 
 bool ShortestJobFirst::CompareJobLenghts(Prozess p1, Prozess p2)
 {
-    if (p1.m_timeToCalculate == p2.m_timeToCalculate) return false;
-    return (p1.m_timeToCalculate < p2.m_timeToCalculate);
+    if (p1.m_timeRemainingToCalculate == p2.m_timeRemainingToCalculate) return false;
+    return (p1.m_timeRemainingToCalculate < p2.m_timeRemainingToCalculate);
 }
 
 ShortestJobFirst::ShortestJobFirst(std::vector<Prozess>& pProzesses, bool preemtiv): SchedulingStrategy(pProzesses)
@@ -39,9 +39,11 @@ void ShortestJobFirst::SchedulePreemtiv()
 				{
 
 					m_Prozesses[j].m_progession++;
+					m_Prozesses[j].UpdateRemainingTime();
 					
 
 					m_Prozesses[j].m_timeTookToCalculate = m_timePassed;
+					std::stable_sort(m_Prozesses.begin(), m_Prozesses.end(), &ShortestJobFirst::CompareJobLenghts);
 					break;
 				}
 			}
